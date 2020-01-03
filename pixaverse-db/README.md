@@ -16,3 +16,4 @@ setupDatabase(config).then(db => {
 
 - npm i --save-dev standard
 - npm i sequelize pg pg-hstore --save
+- npm i --save-dev ava

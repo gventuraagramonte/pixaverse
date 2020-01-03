@@ -8,7 +8,7 @@ const db = require('./')
 const prompt = inquirer.createPromptModule()
 
 async function setup () {
-  //Aqui vamos a preguntar en el prompt de la consola si queremos borrar la base de datos
+  // Aqui vamos a preguntar en el prompt de la consola si queremos borrar la base de datos
   const answer = await prompt([
     {
       type: 'confirm',
@@ -17,7 +17,7 @@ async function setup () {
     }
   ])
 
-  if(!answer.setup){
+  if (!answer.setup) {
     return console.log('Nothing happened !')
   }
 
@@ -30,7 +30,7 @@ async function setup () {
     logging: s => debug(s),
     setup: true
   }
-  
+
   await db(config).catch(handleFatalError)
 
   console.log('Success!')
@@ -38,7 +38,8 @@ async function setup () {
 }
 
 function handleFatalError (err) {
-  console.error(err.message)
+  // Aqui mostramos los errores con stylos
+  console.error(`${chalk.red('[fatal error]')} ${err.message}`)
   console.error(err.stack)
   process.exit(1)
 }

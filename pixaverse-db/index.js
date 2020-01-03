@@ -3,10 +3,22 @@
 const setupDatabase = require('./lib/db')
 const setupAgentModel = require('./models/agent')
 const setupMetricModel = require('./models/metric')
+const defaults = require('defaults')
 
 // Exportamos una funcion que contiene una configuracion
 // Esta funcion sera una funcion asyncrona
 module.exports = async function (config) {
+  config = defaults(config, { // todo lo que venga en el objeto de configuracion los vamos a obtener, pero si alguna de estas
+    dialect: 'sqlite', // propiedades no estan definidas hacemos esto por defecto
+    pool: {
+      max: 10, // maximo de conexiones
+      min: 0,
+      idle: 10000 // si no pasa nada en 10s, automaticamente lo saca del pool de conexiones
+    },
+    query: {
+      raw: true // le decimos que queremos los datos en tipo json
+    }
+  })
   const sequelize = setupDatabase(config)
   const AgentModel = setupAgentModel(config)
   const MetricModel = setupMetricModel(config)
